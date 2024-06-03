@@ -310,7 +310,8 @@ class TfLiteMicroSpeechRecognizeCommands : public TfLiteAbstractRecognizeCommand
 
       /// Removes obsolete records from the queue
       void deleteOldRecords(int32_t limit) {
-        while (result_queue[0].time_ms<limit){
+        // result queue can sometimes be empty so check for that.
+        while (!result_queue.empty() && result_queue[0].time_ms < limit) {
           result_queue.pop_front();
         }
       }
